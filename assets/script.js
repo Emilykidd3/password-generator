@@ -1,14 +1,12 @@
 // Assignment code here
 
-// ask how many characters in password
 var passwordCharacters = function() {
 // function passwordCharacters() {
-  var passwordLength = window.prompt("How long would you like your password to be? Enter a number between 8 and 128.")
-    if (passwordLength === "" || passwordLength === null || passwordLength < 8 || passwordLength > 128 || isNaN(passwordLength)) {
+  var passwordLength = parseInt(window.prompt("How long would you like your password to be? Enter a number between 8 and 128."))
+    if (passwordLength < 8 || passwordLength > 128 || isNaN(passwordLength)) {
     window.alert("Please enter a number between 8 and 128");
-    return;
+    return passwordCharacters();
     }
-  passwordLength = parseInt(passwordLength);
 
   // ask what should be included in password
   var includeNumbers = window.confirm("Press ok if you would like NUMBERS included in your password.");
@@ -17,24 +15,19 @@ var passwordCharacters = function() {
   var upperCase = window.confirm("Press ok if you would like UPPER CASE LETTERS included in your password.");
 
   let charArray = [];
-  let i = 0;
   if (includeNumbers) {
-    charArray[i] = '0123456789';
-    i++;
+    charArray.push ('0123456789');
   }
   if (specialCharacters) {
-    charArray[i] = '!"#$%&()*+,-./:;<=>?@[]^_`{|}~\''
-    i++;
+    charArray.push('!"#$%&()*+,-./:;<=>?@[]^_`{|}~\'');
   }
   if (lowerCase) {
-    charArray[i] = 'abcdefghijklmnopqrstuvwxyz'
-    i++;
+    charArray.push ('abcdefghijklmnopqrstuvwxyz');
   }
   if (upperCase) {
-    charArray[i] = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-    i++;
+    charArray.push ('ABCDEFGHIJKLMNOPQRSTUVWXYZ');
   }
-  console.log(charArray);
+  // console.log(charArray);
 
   // object to hold password 
   return {
@@ -52,19 +45,13 @@ function generatePassword() {
   // call function to ask for password character desired and length
   var options = passwordCharacters();
 
-  // ["abc", "ABC", ]
   var createdPassword = "";
-  var characterArray = []
   for(var i = 0; i < options.pwordLength; i++){
     // get a random index from charArray 
     var randomIndex = Math.floor(Math.random()*options.possibleCharacterTypes.length);
-    // charIndex 
     // get a random index from charArray[]
-    console.log({randomIndex});
     var myString = options.possibleCharacterTypes[randomIndex];
-    console.log({myString});
     var randomCharacter = Math.floor(Math.random()*myString.length);
-    console.log({randomCharacter});
     var addedChar = myString[randomCharacter];
     // append to createdPassword
     createdPassword += addedChar;
@@ -79,12 +66,9 @@ var generateBtn = document.querySelector("#generate");
 
 // Write password to the #password input
 function writePassword() {
-  console.log("I'm being called")
   var password = generatePassword();
   var passwordText = document.querySelector("#password");
-
   passwordText.value = password;
-
 }
 
 // Add event listener to generate button
