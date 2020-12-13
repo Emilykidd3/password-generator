@@ -13,6 +13,10 @@ var passwordCharacters = function() {
   var specialCharacters = window.confirm("Press ok if you would like SPECIAL CHARACTERS included in your password.");
   var lowerCase = window.confirm("Press ok if you would like LOWER CASE LETTERS included in your password.");
   var upperCase = window.confirm("Press ok if you would like UPPER CASE LETTERS included in your password.");
+  if (includeNumbers === false && specialCharacters === false && lowerCase === false && upperCase === false) {
+    window.alert("Please choose at least one type of character to include.");
+    return passwordCharacters();
+  }
 
   let charArray = [];
   if (includeNumbers) {
