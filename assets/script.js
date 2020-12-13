@@ -9,58 +9,91 @@ var passwordCharacters = function() {
     }
   passwordLength = parseInt(passwordLength);
 
-  // ask if numbers should be included
+  // ask what should be included in password
   var includeNumbers = window.confirm("Press ok if you would like NUMBERS included in your password.");
-
-  // ask if special characters should be included
   var specialCharacters = window.confirm("Press ok if you would like SPECIAL CHARACTERS included in your password.");
-
-  // ask if lower case letters should be included
   var lowerCase = window.confirm("Press ok if you would like LOWER CASE LETTERS included in your password.");
-
-  //  as if upper case letters should be included
   var upperCase = window.confirm("Press ok if you would like UPPER CASE LETTERS included in your password.");
+
+  let charArray = [];
+  let i = 0;
+  if (includeNumbers) {
+    charArray[i] += '0123456789';
+    i++;
+  }
+  if (specialCharacters) {
+    charArray[i] += '!"#$%&()*+,-./:;<=>?@[]^_`{|}~\''
+    i++;
+  }
+  if (lowerCase) {
+    charArray[i] += 'abcdefghijklmnopqrstuvwxyz'
+    i++;
+  }
+  if (upperCase) {
+    charArray[i] += 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+    i++;
+  }
+  console.log(charArray);
 
   // object to hold password 
   return {
+    // key : value,
     pwordLength: passwordLength,
     pwordNumber: includeNumbers,
     pwordCharacter: specialCharacters,
     pwordLowercase: lowerCase,
     pwordUppercase: upperCase,
+    possibleCharacterTypes: charArray
   }
-
 }
-// call function to ask for password character desired and length
-var options = passwordCharacters();
 
-options.pwordLength
+function generatePassword() {
+  // call function to ask for password character desired and length
+  var options = passwordCharacters();
 
-options.pwordNumber
-var includenumbers = '0123456789'
-var i = Math.floor(Math.random() * 10);
-var chosenNumber = includenumbers[i]
+  // var numberString = '0123456789'
+  // var i = Math.floor(Math.random() * 10);
+  // var chosenNumber = numberString[i]
 
-options.specialCharacters
-// 33 total
-var specialCharacters = ' !"#$%&()*+,-./:;<=>?@[\]^_`{|}~'
-// list does not incluce '
-var i = Math.floor(Math.random() * 33);
-var chosenSpecialCharacter = specialCharacters[i]
+  // // 33 total
+  // var specialCharactersString = '!"#$%&()*+,-./:;<=>?@[\]^_`{|}~'
+  // // list does not incluce '
+  // var i = Math.floor(Math.random() * 32);
+  // var chosenSpecialCharacter = specialCharactersString[i]
 
-options.pwordLowercase
-var lowercase = 'abcdefghijklmnopqrstuvwxyz'
-var i = Math.floor(Math.random() * 26);
-var chosenLowercase = lowercase[i]
+  // var lowercaseString = 'abcdefghijklmnopqrstuvwxyz'
+  // var i = Math.floor(Math.random() * 26);
+  // var chosenLowercase = lowercaseString[i]
 
-options.pwordUppercase
-var uppercase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-var i = Math.floor(Math.random() * 26);
-var chosenUppercase = uppercase[i]
+  // var uppercaseString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+  // var i = Math.floor(Math.random() * 26);
+  // var chosenUppercase = uppercaseString[i]
 
-for(var i = 0; i < options.pwordLength; i++){
-  console.log(chosenNumber || chosenSpecialCharacter || chosenLowercase || chosenUppercase)
+  // var allChars = chosenNumber + chosenSpecialCharacter + chosenLowercase + chosenUppercase
+
+  // ["abc", "ABC", ]
+  var createdPassword = "";
+  var characterArray = []
+  for(var i = 0; i < options.pwordLength; i++){
+    // get a random index from charArray ==> 1
+    var randomIndex = Math.floor(Math.random()*options.possibleCharacterTypes.length);
+    // charIndex = 1
+    // get a random index from charArray[1]
+    console.log({randomIndex});
+    var myString = options.possibleCharacterTypes[randomIndex];
+    console.log({myString});
+    var randomCharacter = Math.floor(Math.random()*myString.length);
+    console.log({randomCharacter});
+    // append to createdPassword
+    createdPassword += randomCharacter;
+    console.log({createdPassword});
+    // console.log(chosenNumber + chosenSpecialCharacter + chosenLowercase + chosenUppercase)
+  }
+  // return createdPassword
 }
+
+
+
 
 
 // Get references to the #generate element
@@ -68,6 +101,7 @@ var generateBtn = document.querySelector("#generate");
 
 // Write password to the #password input
 function writePassword() {
+  console.log("I'm being called")
   var password = generatePassword();
   var passwordText = document.querySelector("#password");
 
@@ -99,3 +133,4 @@ generateBtn.addEventListener("click", writePassword);
 // 6- put them all together
 // 7- randomize the order 
 // 8- get to desired length
+// 9- put the password into the html
